@@ -9,7 +9,7 @@ import com.typesafe.spark.test.mesos.MesosIntTestHelper
 
 object MesosState extends Enumeration {
   type MesosState = Value
-  val TASK_RUNNING, TASK_FINISHED = Value
+  val TASK_RUNNING, TASK_FINISHED, TASK_STAGING = Value
 }
 import MesosState._
 
