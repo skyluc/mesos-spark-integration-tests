@@ -25,7 +25,9 @@ trait DynamicAllocationSpec extends Eventually { self: MesosIntTestHelper =>
         // start with 1 executor per slave
         // TODO: this is a bug, it should follow spark.dynamicAllocation.initialExecutors
         val m = MesosCluster.loadStates(mesosConsoleUrl)
-        assert(m.sparkFramework.isDefined, "test driver framework should be running")
+        assertResult(true, "test driver framework should be running") {
+          m.sparkFramework.isDefined
+        }
         assertResult(1 * m.numberOfSlaves, "One task per slave should be running, at startup, as (BUG) per spark.dynamicAllocation.minExecutors") {
           m.sparkFramework.get.nbRunningTasks
         }
@@ -34,7 +36,9 @@ trait DynamicAllocationSpec extends Eventually { self: MesosIntTestHelper =>
       eventually {
         // check state before running, should be done to 1 executor
         val m = MesosCluster.loadStates(mesosConsoleUrl)
-        assert(m.sparkFramework.isDefined, "test driver framework should be running")
+        assertResult(true, "test driver framework should be running") {
+          m.sparkFramework.isDefined
+        }
         assertResult(1, "One task should be running, at startup, as per spark.dynamicAllocation.minExecutors") {
           m.sparkFramework.get.nbRunningTasks
         }
@@ -53,7 +57,9 @@ trait DynamicAllocationSpec extends Eventually { self: MesosIntTestHelper =>
       {
         // check state after running, should have 1 executor per slave
         val m = MesosCluster.loadStates(mesosConsoleUrl)
-        assert(m.sparkFramework.isDefined, "test driver framework should be running")
+        assertResult(true, "test driver framework should be running") {
+          m.sparkFramework.isDefined
+        }
         assertResult(1 * m.numberOfSlaves, "One task per slave should be running, after first execution, as per spark.dynamicAllocation.maxExecutors") {
           m.sparkFramework.get.nbRunningTasks
         }
@@ -62,7 +68,9 @@ trait DynamicAllocationSpec extends Eventually { self: MesosIntTestHelper =>
       eventually {
         // check state after waiting, should be back down to 1 executor
         val m = MesosCluster.loadStates(mesosConsoleUrl)
-        assert(m.sparkFramework.isDefined, "test driver framework should be running")
+        assertResult(true, "test driver framework should be running") {
+          m.sparkFramework.isDefined
+        }
         assertResult(1, "One task should be running, after wait, as per spark.dynamicAllocation.minExecutors") {
           m.sparkFramework.get.nbRunningTasks
         }
@@ -79,7 +87,9 @@ trait DynamicAllocationSpec extends Eventually { self: MesosIntTestHelper =>
       {
         // check state after 2nd run, should be back up to 1 executor per slave
         val m = MesosCluster.loadStates(mesosConsoleUrl)
-        assert(m.sparkFramework.isDefined, "test driver framework should be running")
+        assertResult(true, "test driver framework should be running") {
+          m.sparkFramework.isDefined
+        }
         assertResult(1 * m.numberOfSlaves, "One task per slave should be running, after second execution, as per spark.dynamicAllocation.maxExecutors") {
           m.sparkFramework.get.nbRunningTasks
         }
