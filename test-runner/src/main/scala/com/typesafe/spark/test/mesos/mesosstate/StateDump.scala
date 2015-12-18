@@ -16,6 +16,9 @@ import MesosState._
 
 
 case class MesosCluster(frameworks: List[MesosFramework], slaves: List[MesosSlave]) {
+  
+  def numberOfSlaves: Int = slaves.size
+  
   def sparkFramework: Option[MesosFramework] =
     frameworks.find(f => f.active && f.name.startsWith(MesosIntTestHelper.SPARK_FRAMEWORK_PREFIX))
 }
@@ -43,7 +46,11 @@ object MesosCluster {
 case class Resources(cpu: Int, disk: Double, mem: Double)
 case class ReservedResourcesPerRole(roleName: String, resources: Resources)
 
-case class MesosFramework (frameworkId: String, name: String, tasks: List[MesosTask], resources: Resources, active: Boolean)
+case class MesosFramework (frameworkId: String, name: String, tasks: List[MesosTask], resources: Resources, active: Boolean) {
+  lazy val nbRunningTasks: Int =
+    tasks.filter { _.state == MesosState.TASK_RUNNING }.size
+}
+
 case class MesosSlave(
     slaveId: String,
     resources: Resources,
