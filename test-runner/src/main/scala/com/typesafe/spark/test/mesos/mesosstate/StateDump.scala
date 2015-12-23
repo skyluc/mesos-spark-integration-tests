@@ -16,11 +16,15 @@ import MesosState._
 
 
 case class MesosCluster(frameworks: List[MesosFramework], slaves: List[MesosSlave]) {
-  
+
   def numberOfSlaves: Int = slaves.size
-  
-  def sparkFramework: Option[MesosFramework] =
-    frameworks.find(f => f.active && f.name.startsWith(MesosIntTestHelper.SPARK_FRAMEWORK_PREFIX))
+
+  lazy val sparkFramework: Option[MesosFramework] = {
+    val f = frameworks.find(f => f.active && f.name.startsWith(MesosIntTestHelper.SPARK_FRAMEWORK_PREFIX))
+    val time = System.currentTimeMillis
+    println(s"$time -- $f")
+    f
+  }
 }
 
 

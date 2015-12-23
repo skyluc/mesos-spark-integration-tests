@@ -17,6 +17,7 @@ trait DynamicAllocationSpec extends Eventually { self: MesosIntTestHelper =>
     "spark.dynamicAllocation.enabled" -> "true",
     "spark.shuffle.service.enabled" -> "true",
     "spark.dynamicAllocation.executorIdleTimeout" -> "5s",
+    "spark.dynamicAllocation.maxExecutors" -> "3",
     "spark.dynamicAllocation.minExecutors" -> "1",
     "spark.dynamicAllocation.initialExecutors" -> "1",
     "spark.dynamicAllocation.schedulerBacklogTimeout" -> "1s") { sc =>
@@ -77,7 +78,7 @@ trait DynamicAllocationSpec extends Eventually { self: MesosIntTestHelper =>
       }
 
       val rdd2 = sc.makeRDD(1 to 25, numberOfSlaves).mapPartitions { i =>
-        Thread.sleep(10000)
+        Thread.sleep(20000)
         i
       }
       val res2 = rdd2.sum()

@@ -9,12 +9,12 @@ import MesosIntTestHelper.TEST_TIMEOUT
 
 class ClientModeSpec(
   override val mesosConsoleUrl: String,
-  override val cfg: RoleConfigInfo)
+  /* override */ val cfg: RoleConfigInfo)
   extends FunSuite with TimeLimitedTests with MesosIntTestHelper
   with SimpleFineGrainSpec
-  with SimpleCoarseGrainSpec
-  with SparkPropertiesSpec
-  with RolesSpec
+//  with SimpleCoarseGrainSpec
+//  with SparkPropertiesSpec
+//  with RolesSpec
   with DynamicAllocationSpec {
 
   import MesosIntTestHelper._
