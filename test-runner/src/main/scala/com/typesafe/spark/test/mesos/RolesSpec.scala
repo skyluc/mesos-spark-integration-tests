@@ -26,8 +26,8 @@ trait RolesSpec { self: MesosIntTestHelper =>
       assert(m.slaves.flatMap { x => x.roleResources.map { y => y.roleName } }.contains(cfg.role),
           s"Role ${cfg.role} should be available on the cluster")
 
-      assertResult("Wrong number of used cpus", cfg.roleCpus.toInt){
-       m.sparkFramework.get.resources.cpu 
+      assertResult(cfg.roleCpus.toInt, "Wrong number of used cpus"){
+       m.sparkFramework.get.resources.cpu
       }
     }
   }
