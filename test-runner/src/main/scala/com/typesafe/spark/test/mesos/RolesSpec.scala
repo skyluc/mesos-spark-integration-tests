@@ -23,11 +23,12 @@ trait RolesSpec { self: MesosIntTestHelper =>
     assert(m.sparkFramework.isDefined, "The driver should be running")
 
     if (cfg.role != "*") {
-      // TODO: add message
-      assert(m.slaves.flatMap { x => x.roleResources.map { y => y.roleName } }.contains(cfg.role))
+      assert(m.slaves.flatMap { x => x.roleResources.map { y => y.roleName } }.contains(cfg.role),
+          s"Role ${cfg.role} should be available on the cluster")
 
-      // TODO: add message
-      assert(m.sparkFramework.get.resources.cpu == cfg.roleCpus.toInt)
+      assertResult("Wrong number of used cpus", cfg.roleCpus.toInt){
+       m.sparkFramework.get.resources.cpu 
+      }
     }
   }
 
